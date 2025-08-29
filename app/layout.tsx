@@ -11,11 +11,11 @@ import './globals.css'
 
 const HEAD_SCRIPTS = process.env.HEAD_SCRIPTS as string
 
-const APP_NAME = 'Gemini Next Chat'
-const APP_DEFAULT_TITLE = 'Gemini Next Chat'
-const APP_TITLE_TEMPLATE = '%s - PWA App'
+const APP_NAME = 'Okas AI'
+const APP_DEFAULT_TITLE = 'Okas AI'
+const APP_TITLE_TEMPLATE = 'Okas AI'
 const APP_DESCRIPTION =
-  'Deploy your private Gemini application for free with one click, supporting Gemini 1.5 and Gemini 2.0 models. 一键免费部署您的私人 Gemini 应用, 支持 Gemini 1.5 和 Gemini 2.0 模型。'
+  'Use Mr Okas personal AI'
 
 export const metadata: Metadata = {
   applicationName: APP_NAME,
