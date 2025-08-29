@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   icons: {
     icon: {
       type: 'image/svg+xml',
-      url: './logo.svg',
+      url: './logo.png',
     },
   },
   manifest: './manifest.json',
