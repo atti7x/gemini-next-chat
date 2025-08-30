@@ -1,6 +1,6 @@
 {
-  "name": "Gemini Next Chat",
-  "short_name": "Gemini Next Chat",
+  "name": "Okas AI",
+  "short_name": "Okas",
   "description": "Deploy your private Gemini application for free with one click, supporting Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini Pro and Gemini Pro Vision models.",
   "id": "gemini-next-chat",
   "scope": ".",
@@ -20,6 +20,11 @@
       "src": "logo.svg",
       "sizes": "any",
       "type": "svg+xml"
+    },
+    {
+      "src": "icons/appicon180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ],
   "screenshots": [
