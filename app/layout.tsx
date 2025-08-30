@@ -74,10 +74,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" dir="auto" suppressHydrationWarning>
       <head> {HEAD_SCRIPTS ? <Script id="headscript">{HEAD_SCRIPTS}</Script> : null} </head>
       <body>
-                <meta 
-    name="viewport" 
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <StoreProvider>
             <I18Provider>
