@@ -983,10 +983,6 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="flex w-32 items-center gap-1 max-sm:gap-0">
-          <a href="" target="_blank">
-            <Button className="h-8 w-8" title={t('github')} variant="ghost" size="icon">
-              <Github className="h-5 w-5" />
             </Button>
           </a>
           <ThemeToggle />
