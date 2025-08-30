@@ -968,25 +968,6 @@ export default function Home() {
     }
   }, [])
 
-  return (
-    <main className="mx-auto flex h-screen max-h-[-webkit-fill-available] w-full max-w-screen-lg flex-col justify-between overflow-hidden max-lg:max-w-screen-md">
-      <div className="flex w-full justify-between px-4 pb-2 pr-2 pt-10 max-md:pt-4 max-sm:pr-2 max-sm:pt-4">
-        <div className="flex items-center text-red-400">
-          <div>
-            <MessageCircleHeart className="h-10 w-10 max-sm:h-8 max-sm:w-8" />
-          </div>
-          <div className="ml-1 flex-1 max-sm:ml-0.5">
-            <h2 className="text-line-clamp break-all font-bold leading-6 max-sm:text-sm">{conversationTitle}</h2>
-            <ModelSelect
-              className="flex h-4 justify-start border-none px-0 py-0 text-left leading-4 text-slate-500 hover:text-slate-700 dark:hover:text-slate-400"
-              defaultModel={model}
-            />
-          </div>
-        </div>
-         <div className="flex w-32 items-center gap-1 max-sm:gap-0">
-            <Button className="h-8 w-8" title={t('github')} variant="ghost" size="icon">
-              <Github className="h-5 w-5" />
-            </Button>
           </a>
           <ThemeToggle />
           <Button
