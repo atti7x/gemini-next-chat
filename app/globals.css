@@ -171,3 +171,7 @@ body {
     padding-top: constant(safe-area-inset-top);
   }
 }
+
+.text-lg font-semibold text-red-400 {
+  padding-top: env(safe-area-inset-top);
+}
