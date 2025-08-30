@@ -60,8 +60,6 @@ export const metadata: Metadata = {
   },
 }
 
-<link rel="apple-touch-icon" href="public/icons/iconsappicon180x180.png">
-
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1.0,
