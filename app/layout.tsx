@@ -74,7 +74,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" dir="auto" suppressHydrationWarning>
       <head>
         {HEAD_SCRIPTS ? <Script id="headscript">{HEAD_SCRIPTS}</Script> : null} 
-        <link rel="apple-touch-icon" href="/public/appicon180x180.png">
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
