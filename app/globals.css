@@ -178,3 +178,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+html, body, #__next {
+  height: 100vh; /* Sorgt dafür, dass es wirklich die volle Bildschirmhöhe ist */
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
