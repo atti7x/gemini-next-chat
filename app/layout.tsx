@@ -72,7 +72,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" dir="auto" suppressHydrationWarning>
-      <head> {HEAD_SCRIPTS ? <Script id="headscript">{HEAD_SCRIPTS}</Script> : null} </head>
+      <head>
+        {HEAD_SCRIPTS ? <Script id="headscript">{HEAD_SCRIPTS}</Script> : null} 
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+      </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <StoreProvider>
