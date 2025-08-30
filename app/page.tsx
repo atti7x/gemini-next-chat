@@ -968,8 +968,6 @@ export default function Home() {
     }
   }, [])
 
-          </a>
-          <ThemeToggle />
           <Button
             className="h-8 w-8"
             title={t('conversationList')}
