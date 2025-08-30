@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   manifest: './manifest.json',
   appleWebApp: {
-    capable: false,
+    capable: true,
     statusBarStyle: 'black-translucent',
     title: APP_DEFAULT_TITLE,
     // startUpImage: [],
