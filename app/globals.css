@@ -166,7 +166,7 @@ body {
 }
 
 @layer base {
-  body {
+  header {
     padding-top: env(safe-area-inset-top);
   }
 }
