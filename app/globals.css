@@ -164,3 +164,9 @@ body {
     --safe-area-inset-bottom: env(safe-area-inset-bottom);
   }
 }
+
+@layer base {
+  body {
+    padding-top: env(safe-area-inset-top);
+  }
+}
