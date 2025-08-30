@@ -166,7 +166,7 @@ body {
 }
 
 @layer utilities {
-  .pt-safe {
+  .sidebar {
     padding-top: env(safe-area-inset-top);
     padding-top: constant(safe-area-inset-top);
   }
