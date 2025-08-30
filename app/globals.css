@@ -171,26 +171,3 @@ body {
     padding-top: constant(safe-area-inset-top);
   }
 }
-
-/* 1. Das Layout, das alles umschließt */
-.main-layout {
-  display: flex;
-  height: 100vh;
-  padding-top: env(safe-area-inset-top); /* Padding oben bleibt hier für beide */
-
-  /* PADDING-BOTTOM HIER ENTFERNEN! */
-  /* padding-bottom: env(safe-area-inset-bottom); */
-
-  box-sizing: border-box;
-}
-
-/* 2. Die Sidebar, die ganz nach unten gehen soll */
-.sidebar {
-  /* Deine normalen Sidebar-Styles */
-  width: 280px;
-  /* Hier kein padding-bottom hinzufügen! */
-}
-
- /* ✅ NEU: Das Padding kommt jetzt hierher */
-  padding-bottom: env(safe-area-inset-bottom);
-  box-sizing: border-box; /* Wichtig, damit das Padding korrekt berechnet wird */
