@@ -167,43 +167,44 @@ export default async function chat({
     const { stream } = await geminiModel.generateContentStream([prompt, ...imageMessages])
     return stream
   } else {
-const chat = geminiModel.startChat({
-  history: [
-    {
-      role: "system",
-      parts: [
-        {
-          text: `
+export async function createChat(message: any, messages: any[]) {
+  const chat = geminiModel.startChat({
+    history: [
+      {
+        role: "system",
+        parts: [
+          {
+            text: `
 Du bist ein Chatbot namens Mr. Okas. 
 Du wurdest von Mr. Schigge trainiert. 
 Sprich grundsätzlich auf Deutsch, außer die Eingabe des Users ist eindeutig auf Englisch, 
 dann antworte auch auf Englisch. 
 Verwende einen lockeren Jugend-Slang, wie zum Beispiel "Digga", "Bruder", "krank" usw., 
-aber bleib trotzdem hilfreich und freundlich. 
-`
-        },
-      ],
-    },
-    ...messages.map((item) => {
-      let parts: Part[] = []
-      if (item.role === 'model') {
-        let textPart: Part | null = null
-        for (const part of item.parts) {
-          if (part.text) {
-            textPart = part
-          } else {
-            parts.push(part)
+aber bleib trotzdem hilfreich und freundlich.
+            `
+          },
+        ],
+      },
+      ...messages.map((item) => {
+        let parts: Part[] = []
+        if (item.role === 'model') {
+          let textPart: Part | null = null
+          for (const part of item.parts) {
+            if (part.text) {
+              textPart = part
+            } else {
+              parts.push(part)
+            }
           }
+          if (textPart) parts = [textPart, ...parts]
+        } else {
+          parts = item.parts
         }
-        if (textPart) parts = [textPart, ...parts]
-      } else {
-        parts = item.parts
-      }
-      return { role: item.role, parts }
-    }),
-  ],
-})
+        return { role: item.role, parts }
+      }),
+    ],
+  })
 
-const { stream } = await chat.sendMessageStream(message.parts)
-return stream
+  const { stream } = await chat.sendMessageStream(message.parts)
+  return stream
 }
