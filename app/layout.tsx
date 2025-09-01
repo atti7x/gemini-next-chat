@@ -81,14 +81,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <StoreProvider>
             <I18Provider>
-             <SidebarProvider defaultOpen>
-               <div className="flex h-dvh overflow-hidden">
-               <AppSidebar />
-               <main className="flex flex-1 flex-col min-h-0">
-               {children}
-               </main>
-               </div>
-             </SidebarProvider>
+<SidebarProvider defaultOpen className="h-dvh overflow-hidden">
+  <AppSidebar />
+  <main className="flex flex-1 flex-col min-h-0">
+    {children}
+  </main>
+</SidebarProvider>
             </I18Provider>
           </StoreProvider>
         </ThemeProvider>
