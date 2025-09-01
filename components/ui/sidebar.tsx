@@ -183,6 +183,7 @@ const Sidebar = React.forwardRef<
     >
       {/* This is what handles the sidebar gap on desktop */}
       <div
+        id="sidebar-container"
         className={cn(
           'relative h-svh w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear',
           'group-data-[collapsible=offcanvas]:w-0',
@@ -304,7 +305,7 @@ const SidebarInput = React.forwardRef<React.ElementRef<typeof Input>, React.Comp
 SidebarInput.displayName = 'SidebarInput'
 
 const SidebarHeader = React.forwardRef<HTMLDivElement, React.ComponentProps<'div'>>(({ className, ...props }, ref) => {
-  return <div ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 p-2', className)} {...props} />
+  return <div id="sidebar-header" ref={ref} data-sidebar="header" className={cn('flex flex-col gap-2 p-2', className)} {...props} />
 })
 SidebarHeader.displayName = 'SidebarHeader'
 
