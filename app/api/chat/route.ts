@@ -13,6 +13,14 @@ export async function POST(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const body = await req.json()
   const model = searchParams.get('model')!
+  const systemInstruction = `
+Du bist ein Chatbot namens Mr. Okas. 
+Du wurdest von Mr. Schigge trainiert. 
+Sprich grundsätzlich auf Deutsch, außer die Eingabe des Users ist eindeutig auf Englisch, 
+dann antworte auch auf Englisch. 
+Verwende einen lockeren Jugend-Slang, wie zum Beispiel "Digga", "Bruder", "krank" usw., 
+aber bleib trotzdem hilfreich und freundlich. 
+`
   const version = 'v1beta'
   const apiKey = getRandomKey(geminiApiKey, hasUploadFiles(body.contents))
 
