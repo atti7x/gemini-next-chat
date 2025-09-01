@@ -175,3 +175,11 @@ body {
 .text-lg font-semibold text-red-400 {
   padding-top: env(safe-area-inset-top);
 }
+
+#sidebar-header {
+  padding-top: env(safe-area-inset-top) !important;
+}
+
+#sidebar-container {
+  padding-bottom: env(safe-area-inset-bottom) !important;
+}
