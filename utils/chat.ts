@@ -167,7 +167,6 @@ export default async function chat({
     const { stream } = await geminiModel.generateContentStream([prompt, ...imageMessages])
     return stream
   } else {
-export async function createChat(message: any, messages: any[]) {
   const chat = geminiModel.startChat({
     history: [
       {
