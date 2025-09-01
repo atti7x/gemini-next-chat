@@ -175,3 +175,17 @@ body {
 .text-lg font-semibold text-red-400 {
   padding-top: env(safe-area-inset-top);
 }
+
+/*
+ Fix für iOS Safe Area (iPad / iPhone)
+*/
+
+/* Problem 1: Fügt oben einen Abstand für die Statusleiste hinzu */
+.chat-header {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Problem 2: Fügt unten in der Sidebar einen Abstand für den Home-Balken hinzu */
+.sidebar {
+  padding-bottom: env(safe-area-inset-bottom);
+}
