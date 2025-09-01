@@ -176,10 +176,7 @@ body {
   padding-top: env(safe-area-inset-top);
 }
 
-#sidebar-header {
-  padding-top: env(safe-area-inset-top) !important;
-}
-
 [data-sidebar="sidebar"] {
-  padding-bottom: env(safe-area-inset-bottom) !important;
+  background-color: red !important;
+  border: 5px solid yellow !important;
 }
