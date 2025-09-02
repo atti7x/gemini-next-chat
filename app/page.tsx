@@ -202,7 +202,6 @@ export default function Home() {
         generationConfig,
         safety,
       }
-      if (systemInstruction) config.systemInstruction = systemInstruction
       if (talkMode === 'voice') {
         config.systemInstruction = `${getVoiceModelPrompt()}\n\n${systemInstruction}`
       }
