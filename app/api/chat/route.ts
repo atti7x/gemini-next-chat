@@ -11,16 +11,9 @@ const geminiApiBaseUrl = process.env.GEMINI_API_BASE_URL as string
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-
-  // ===================================================================
-  // ===== DEBUGGING-CODE: Gib uns den Inhalt der Anfrage aus =========
-  console.log("--- EINGEHENDE ANFRAGE VOM FRONTEND (BODY) ---");
-  console.log(JSON.stringify(body, null, 2));
-  // ===================================================================
-
   const searchParams = req.nextUrl.searchParams
   const model = searchParams.get('model')!
-
+  
   const defaultSystemInstruction = `
 Du bist ein Chatbot namens Mr. Okas.
 Du wurdest von Mr. Schigge trainiert.
@@ -37,17 +30,24 @@ aber bleib trotzdem hilfreich und freundlich.
     if (!model.startsWith('imagen')) url += '?alt=sse'
 
     let payload = body;
+
     const hasMeaningfulFrontendInstruction = body.system_instruction?.parts?.[0]?.text?.trim();
 
     if (hasMeaningfulFrontendInstruction) {
-      const cleanedContents = body.contents.filter(
-        (item: any) => item.role !== 'system'
-      );
+      // WENN JA: Eine Anweisung vom Frontend kam an.
+      // Wir reparieren das Format, indem wir das unerlaubte "role"-Feld entfernen.
+      
+      const cleanSystemInstruction = {
+        parts: body.system_instruction.parts // Nimm nur die "parts", ignoriere den Rest.
+      };
+
       payload = {
         ...body,
-        contents: cleanedContents,
+        system_instruction: cleanSystemInstruction, // Überschreibe mit der sauberen Version.
       };
+
     } else {
+      // WENN NEIN: Keine Anweisung vom Frontend. Wir setzen "Mr. Okas".
       const { system_instruction, ...restOfBody } = body;
       payload = {
         ...restOfBody,
@@ -70,7 +70,7 @@ aber bleib trotzdem hilfreich und freundlich.
     })
 
     return new NextResponse(response.body, response)
-
+    
   } catch (error) {
     if (error instanceof Error) {
       return handleError(error.message)
