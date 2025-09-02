@@ -183,3 +183,14 @@ body {
 #sidebar-container {
   padding-bottom: env(safe-area-inset-bottom) !important;
 }
+
+
+body {
+  /* Fügt automatisch den nötigen Abstand oben hinzu */
+  padding-top: env(safe-area-inset-top);
+
+  /* Optional, aber empfohlen für Querformat etc. */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
