@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
   const model = searchParams.get('model')!
   
-  // Deine Standard-Systemanweisung für "Mr. Okas"
   const systemInstruction = `
 Du bist ein Chatbot namens Mr. Okas.
 Du wurdest von Mr. Schigge trainiert.
@@ -30,11 +29,15 @@ aber bleib trotzdem hilfreich und freundlich.
     let url = `${geminiApiBaseUrl || GEMINI_API_BASE_URL}/${version}/models/${model}`
     if (!model.startsWith('imagen')) url += '?alt=sse'
 
-    // FINALE LOGIK: Überschreibe IMMER die system_instruction.
-    // Wir kopieren den originalen Body und fügen danach unsere Anweisung hinzu.
-    // Falls der Body bereits eine system_instruction hatte, wird sie hier überschrieben.
+    // FINALE KORREKTUR: Wir entfernen explizit die alte system_instruction.
+    // Diese Zeile zerlegt das 'body'-Objekt: 'system_instruction' wird in eine
+    // separate Variable gesteckt (die wir ignorieren) und alles andere kommt in 'restOfBody'.
+    const { system_instruction, ...restOfBody } = body;
+
+    // Jetzt erstellen wir das Payload mit dem "sauberen" Body und fügen
+    // danach unsere eigene, garantierte Anweisung hinzu.
     const payload = {
-      ...body,
+      ...restOfBody,
       system_instruction: {
         parts: [
           { text: systemInstruction }
