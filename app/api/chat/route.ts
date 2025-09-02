@@ -10,10 +10,17 @@ const geminiApiKey = process.env.GEMINI_API_KEY as string
 const geminiApiBaseUrl = process.env.GEMINI_API_BASE_URL as string
 
 export async function POST(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams
   const body = await req.json()
+
+  // ===================================================================
+  // ===== DEBUGGING-CODE: Gib uns den Inhalt der Anfrage aus =========
+  console.log("--- EINGEHENDE ANFRAGE VOM FRONTEND (BODY) ---");
+  console.log(JSON.stringify(body, null, 2));
+  // ===================================================================
+
+  const searchParams = req.nextUrl.searchParams
   const model = searchParams.get('model')!
-  
+
   const defaultSystemInstruction = `
 Du bist ein Chatbot namens Mr. Okas.
 Du wurdest von Mr. Schigge trainiert.
@@ -30,27 +37,17 @@ aber bleib trotzdem hilfreich und freundlich.
     if (!model.startsWith('imagen')) url += '?alt=sse'
 
     let payload = body;
-
     const hasMeaningfulFrontendInstruction = body.system_instruction?.parts?.[0]?.text?.trim();
 
     if (hasMeaningfulFrontendInstruction) {
-      // WENN JA: Anweisung vom Frontend kam an.
-      // Wir MÜSSEN die Anfrage säubern, um den 400-Fehler zu verhindern.
-      
-      // Filtere den Chatverlauf und behalte nur Nachrichten, die NICHT die Rolle "system" haben.
       const cleanedContents = body.contents.filter(
         (item: any) => item.role !== 'system'
       );
-
-      // Erstelle ein neues Payload, das alles aus der originalen Anfrage enthält,
-      // ABER mit dem gesäuberten Chatverlauf.
       payload = {
         ...body,
         contents: cleanedContents,
       };
-
     } else {
-      // WENN NEIN: Keine Anweisung vom Frontend. Wir setzen "Mr. Okas".
       const { system_instruction, ...restOfBody } = body;
       payload = {
         ...restOfBody,
@@ -73,7 +70,7 @@ aber bleib trotzdem hilfreich und freundlich.
     })
 
     return new NextResponse(response.body, response)
-    
+
   } catch (error) {
     if (error instanceof Error) {
       return handleError(error.message)
