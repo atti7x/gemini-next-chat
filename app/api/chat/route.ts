@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json()
   const model = searchParams.get('model')!
   
-  const systemInstruction = `
+  const defaultSystemInstruction = `
 Du bist ein Chatbot namens Mr. Okas.
 Du wurdest von Mr. Schigge trainiert.
 Sprich grundsätzlich auf Deutsch, außer die Eingabe des Users ist eindeutig auf Englisch,
@@ -29,21 +29,38 @@ aber bleib trotzdem hilfreich und freundlich.
     let url = `${geminiApiBaseUrl || GEMINI_API_BASE_URL}/${version}/models/${model}`
     if (!model.startsWith('imagen')) url += '?alt=sse'
 
-    // FINALE KORREKTUR: Wir entfernen explizit die alte system_instruction.
-    // Diese Zeile zerlegt das 'body'-Objekt: 'system_instruction' wird in eine
-    // separate Variable gesteckt (die wir ignorieren) und alles andere kommt in 'restOfBody'.
-    const { system_instruction, ...restOfBody } = body;
+    let payload = body;
 
-    // Jetzt erstellen wir das Payload mit dem "sauberen" Body und fügen
-    // danach unsere eigene, garantierte Anweisung hinzu.
-    const payload = {
-      ...restOfBody,
-      system_instruction: {
-        parts: [
-          { text: systemInstruction }
-        ]
-      }
-    };
+    const hasMeaningfulFrontendInstruction = body.system_instruction?.parts?.[0]?.text?.trim();
+
+    if (hasMeaningfulFrontendInstruction) {
+      // WENN JA: Anweisung vom Frontend kam an.
+      // Wir MÜSSEN die Anfrage säubern, um den 400-Fehler zu verhindern.
+      
+      // Filtere den Chatverlauf und behalte nur Nachrichten, die NICHT die Rolle "system" haben.
+      const cleanedContents = body.contents.filter(
+        (item: any) => item.role !== 'system'
+      );
+
+      // Erstelle ein neues Payload, das alles aus der originalen Anfrage enthält,
+      // ABER mit dem gesäuberten Chatverlauf.
+      payload = {
+        ...body,
+        contents: cleanedContents,
+      };
+
+    } else {
+      // WENN NEIN: Keine Anweisung vom Frontend. Wir setzen "Mr. Okas".
+      const { system_instruction, ...restOfBody } = body;
+      payload = {
+        ...restOfBody,
+        system_instruction: {
+          parts: [
+            { text: defaultSystemInstruction }
+          ]
+        }
+      };
+    }
 
     const response = await fetch(url, {
       method: 'POST',
