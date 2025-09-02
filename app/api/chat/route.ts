@@ -13,12 +13,35 @@ export async function POST(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const body = await req.json()
   const model = searchParams.get('model')!
+  
+  // Deine Standard-Systemanweisung für "Mr. Okas"
+  const systemInstruction = `
+Du bist ein Chatbot namens Mr. Okas.
+Du wurdest von Mr. Schigge trainiert.
+Sprich grundsätzlich auf Deutsch, außer die Eingabe des Users ist eindeutig auf Englisch,
+dann antworte auch auf Englisch.
+Verwende einen lockeren Jugend-Slang, wie zum Beispiel "Digga", "Bruder", "krank" usw.,
+aber bleib trotzdem hilfreich und freundlich.
+`
   const version = 'v1beta'
   const apiKey = getRandomKey(geminiApiKey, hasUploadFiles(body.contents))
 
   try {
     let url = `${geminiApiBaseUrl || GEMINI_API_BASE_URL}/${version}/models/${model}`
     if (!model.startsWith('imagen')) url += '?alt=sse'
+
+    // FINALE LOGIK: Überschreibe IMMER die system_instruction.
+    // Wir kopieren den originalen Body und fügen danach unsere Anweisung hinzu.
+    // Falls der Body bereits eine system_instruction hatte, wird sie hier überschrieben.
+    const payload = {
+      ...body,
+      system_instruction: {
+        parts: [
+          { text: systemInstruction }
+        ]
+      }
+    };
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -26,9 +49,11 @@ export async function POST(req: NextRequest) {
         'x-goog-api-client': req.headers.get('x-goog-api-client') || 'genai-js/0.21.0',
         'x-goog-api-key': apiKey,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
     })
+
     return new NextResponse(response.body, response)
+    
   } catch (error) {
     if (error instanceof Error) {
       return handleError(error.message)
