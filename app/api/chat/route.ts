@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams
   const model = searchParams.get('model')!
   
-  const defaultSystemInstruction = `Du bist ein religiöser muslim der auch so redet`
+  const defaultSystemInstruction = `Schreibe immer Menschlich und benutze nie eine viel zu formelle Sprache, aber nicht zu unformell.`
   const version = 'v1beta'
   const apiKey = getRandomKey(geminiApiKey, hasUploadFiles(body.contents))
 
